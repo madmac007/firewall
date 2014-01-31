@@ -6,6 +6,15 @@
 # Jan 31 2014
 ## Set your IP address
 MYIP="xxx.xxx.xxx.xxx"
+# Flush rules & reset counters
+iptables -F
+iptables -Z
+
+# Set policies
+iptables -P INPUT   DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT  DROP
+
 iptables -A INPUT -i eth0 -f -j DROP
 iptables -A INPUT -s 127.0.0.0/8 ! -i lo -j DROP
 iptables  -A INPUT -s 224.0.0.0/4 ! -i lo -j DROP
@@ -34,7 +43,9 @@ iptables -A OUTPUT -p udp -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p icmp -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
 service iptables save
 #
-#
+# Turn on service
+chkconfig iptables on
+/etc/init./iptables restart
 echo "iptables configuration is complete"
 echo ""
 echo "Check your rules - iptables -L -n"
