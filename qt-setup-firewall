@@ -41,6 +41,7 @@ iptables -A OUTPUT -o lo -j ACCEPT
 iptables -A OUTPUT -p tcp -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p udp -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p icmp -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+#Save to iptables
 service iptables save
 #
 # Turn on service
